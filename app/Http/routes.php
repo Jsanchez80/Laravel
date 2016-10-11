@@ -108,3 +108,5 @@ Route::get('/rolldice2', function(){
 });
 
 
+
+get('/test', 'HomeController@test')
