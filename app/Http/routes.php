@@ -49,6 +49,7 @@ Route::get ('/uppercase/{word}','HomeController@uppercase');
 // });
 
 Route::get('/increment/{number?}', 'HomeController@Increment');
+
 // Route::get('/add/{a?}/{b?}', function($a = 2, $b = 1)) {
 // 	return $a + $b;
 // });
@@ -89,6 +90,8 @@ Route::get('/increment/{number?}', 'HomeController@Increment');
 // 	return view('exercises.rolldice')->with($data);
 // });
 
+Route::get('/rolldice', 'HomeController@rolldice');
+
 // // Route::get('/rolldice/{guess?}', function($guess = 1) {
 // //     $data['dice_roll'] = mt_rand(1, 6);
 // //     $data['guess'] = $guess;
@@ -114,3 +117,31 @@ Route::get('/increment/{number?}', 'HomeController@Increment');
 
 
 // // get('/test', 'HomeController@test')
+
+Route::resource('posts', 'PostsController');
+
+// Route::get('orm-test', function ()
+// {
+
+// 	$post1 = new \App\Models\Post();
+// 	$post1->title = 'Eloquent is awesome!';
+// 	$post1->url='https://laravel.com/docs/5.1/eloquent';
+// 	$post1->content  = 'It is super easy to create a new post.';
+// 	$post1->created_by = 1;
+// 	$post1->save();
+
+// 	$post2 = new \App\Models\Post();
+// 	$post2->title = 'Eloquent is really easy!';
+// 	$post2->url='https://laravel.com/docs/5.1/eloquent';
+// 	$post2->content = 'It is super easy to create a new post.';
+// 	$post2->created_by = 1;
+// 	$post2->save();
+
+//     // test code here
+// });
+
+// Route::resources('users', 'UsersController');
+
+
+
+
