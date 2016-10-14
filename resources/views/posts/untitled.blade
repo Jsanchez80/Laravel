@@ -1,0 +1,36 @@
+@extends('layouts.master')
+
+@section('top-script')
+	<title>Update</title>
+@stop
+
+@section('content')
+	
+	<h1>Not a member? SignUp Below! </h1>
+	<form method="POST" action="{{ action('PostsController@store') }}">
+		{!! csrf_field() !!}
+		First Name: <input type="text" name="title" value="{{ old('name') }}">
+		Last Name: <input type="text" name="title" value="{{ old('name') }}">
+		<br>
+		<br>
+		Birthdate: <input type="text" name="title" value="{{ old('name') }}">
+		Username: <input type="text" name="title" value="{{ old('name') }}">
+		Password: <input type="text" name="title" value="{{ old('name') }}">
+		Confirm Password: <input type="text" name="title" value="{{ old('name') }}">
+		Email: <input type="text" name="url" value="{{ old('name') }}">
+		<br>
+		<br>
+		<p>Gender:</p>
+		<input type="radio" name="gender" value="male" checked> Male<br>
+  		<input type="radio" name="gender" value="female"> Female<br>
+  		<input type="radio" name="gender" value="other"> Other<br>
+  		<br>
+  		<br>
+  		SignUp for our weekly newsletter: <input type="radio" name="newsletter" value="subscribed" checked> Subscribed 
+  		<br>
+  		<br>
+		<input type="submit">
+
+	</form>
+
+@stop
