@@ -4,7 +4,12 @@
 	<title>Roll Dice</title>
 @stop
 
+@section('gif')
+	<div>
+	<img src="/resources/img/rolling_dice.mp4">
+	</div>	
 @section('content')
+	
 	<h1>Welcome to Rolldice! </h1>
 		<h3>Shake em' up!</h3>
 		<table style="width:100%">
