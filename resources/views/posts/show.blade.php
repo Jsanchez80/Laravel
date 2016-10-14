@@ -6,8 +6,8 @@
 
 @section('content')
 	
-<div><h2 class="add">Place for your ad!</h2></div> 
-    
+<div><h2 class="add">Place for your ad!</h2>
+    <div class="row">
      <div class="col-md-10 blogShort">
 	     
 		<h3>{{ $post->title }} </h3>
@@ -15,12 +15,12 @@
 	    <h3>{{ $post->url }}</h3>
 	    <br>
 	     
-	     
-	     
+	  </div>    
+    </div>    
 	    
-<div class="art-footer-text">
+{{-- <div class="art-footer-text">
     <p>EVOQ | Copyright © 2016</p>
-</div>
+</div> --}}
 
 
 @stop
