@@ -8,6 +8,13 @@ use App\Models\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+// use App\Validate as ValForm;
+// use App\Models\Validate as ValFiles;
+
+//  Required for the Log Class: 
+use Illuminate\Support\Facades\Log; 
+
+
 class PostsController extends Controller
 {
     /**
@@ -18,7 +25,19 @@ class PostsController extends Controller
     public function index()
     {
         //
-        // dd(Post::all());
+        Log::info('This is some useful information.');
+
+        Log::debug('Here is some information that will help me find an error');
+
+        Log::warning('Something could be going wrong.');
+
+        Log::error('Something is really going wrong.');
+        // defining your error
+        abort(503);
+        
+        // $post = new Post();
+        // dd($post);
+
         $posts = Post::paginate(5);
         $data = ['posts'=>$posts];
     	return view('posts.index', $data);
