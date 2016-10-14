@@ -14,7 +14,12 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        //  This command will run your seeder for the UserTableSeeder
         // $this->call(UserTableSeeder::class);
+
+        //  This command will run your seeder for the UserSeeder and PostSeeder
+         $this->call(Userseeder::class);
+         $this->call(PostSeeder::class);
 
         Model::reguard();
     }
