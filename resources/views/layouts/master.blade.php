@@ -121,10 +121,10 @@
 	</div>
 
 {{-- Begin: Footer info listed below.  --}}
-
+<div class="row">
 	<div class="footer-text">
 		<p align="center">EVOQ | Copyright © 2016</p>
 	</div>
-
+</div>
 </body>
 </html>
