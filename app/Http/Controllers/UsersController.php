@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -17,8 +17,9 @@ class UsersController extends Controller
     public function index()
     {
         //
-        $users = User::all();
+        $users = User::paginate(5);
         $data = ['users'=>$users];
+        // dd($data);
         return view('users.index', $data);
     }
 
@@ -41,11 +42,11 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new Post;
-           $user->created_by = 1;
-           $user->title = $request->title;
-           $user->content = $request->content;
-           $user->url = $request->url;
+        $user = new User;
+           $user->created_by = $request->user()->id;
+           $user->name = $request->name;
+           $user->email = $request->email;
+           $user->created_at = $request->created_at;
            $user->save();
 
         return redirect()->action('UsersController@show', $user->$id);
@@ -75,7 +76,7 @@ class UsersController extends Controller
     {
         $user = User::find($id);
         $data = ['user' => $user];
-        return view('user.edit')->with($data);
+        return view('users.edit')->with($data);
     }
 
     /**
