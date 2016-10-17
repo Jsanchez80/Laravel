@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 namespace App\Http\Controllers\Auth;
 
@@ -23,6 +23,9 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+    protected $redirectPath = '/posts';
+    protected $redirectAfterLogout = '/posts/1';
+
     /**
      * Create a new authentication controller instance.
      *
@@ -31,6 +34,8 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'getLogout']);
+        $this->redirectPath = action('PostsController@index');
+        $this->redirectAfterLogout = action('PostsController@show');
     }
 
     /**
