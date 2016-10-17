@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Log;
 
 class PostsController extends Controller
 {
+    // use this function to keep people from accessing site features unless they are logged in:
+//     public function __construct()
+// {
+//     $this->middleware('auth', ['except' => ['index', 'show']]);
+// }
     /**
      * Display a listing of the resource.
      *
@@ -24,6 +29,7 @@ class PostsController extends Controller
      */
     public function index()
     {
+        // abort(403);
         //
         Log::info('This is some useful information.');
 
@@ -33,8 +39,8 @@ class PostsController extends Controller
 
         Log::error('Something is really going wrong.');
         // defining your error
-        abort(503);
-        
+      
+
         // $post = new Post();
         // dd($post);
 
@@ -68,6 +74,7 @@ class PostsController extends Controller
     public function create()
     {
 
+        // abort(403);
         return view('posts.create');
         
     }
@@ -80,6 +87,7 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+         // abort(404);
             $rules = array(
                 'title' => 'required|max:100',
                 'content' => 'required',
@@ -90,7 +98,8 @@ class PostsController extends Controller
             $this->validate($request, $rules);
             $request->session()->forget('ERROR_MESSAGE');
             $post = new Post;
-        	$post->created_by = 1;
+        	$post->created_by = $request->user()->id;
+            // you can also use the previous line of code (line 97) to assign a user_id:
         	$post->title = $request->title;
         	$post->content = $request->content;
         	$post->url = $request->url;
@@ -109,6 +118,8 @@ class PostsController extends Controller
      */
     public function show($id)
     {
+
+         // abort(404);
         //
         $post = Post::find($id);
         $data = ['post' => $post];
@@ -125,11 +136,11 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
-        $post = Post::find($id);
+      
+        $post = Post::findOrFail($id);
         $data = ['post' => $post];
         return view('posts.edit')->with($data);
-      
+        // abort(403);
     }
 
     /**
@@ -141,23 +152,25 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+     // abort(404);
         $rules = array(
-                'title' => 'required|max:100',
-                'content' => 'required',
-                'url' => 'required',
-                );
-            $request->session()->flash('ERROR_MESSAGE', 'Post was not saved. Please see messages under inputs.');
+            'title' => 'required|max:100',
+            'content' => 'required',
+            'url' => 'required',
+            );
+        $request->session()->flash('ERROR_MESSAGE', 'Post was not saved. Please see messages under inputs.');
 
-            $this->validate($request, $rules);
-            $request->session()->forget('ERROR_MESSAGE');
-            $post = new Post;
-            $post->created_by = 1;
-            $post->title = $request->title;
-            $post->content = $request->content;
-            $post->url = $request->url;
-            $post->save();
+        $this->validate($request, $rules);
+        $request->session()->forget('ERROR_MESSAGE');
+        $post = new Post;
+        $post->created_by = 1;
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->url = $request->url;
+        $post->save();
 
-           $request->session()->flash('SUCCESS_MESSAGE', 'Post was saved successfully!');
+       $request->session()->flash('SUCCESS_MESSAGE', 'Post was saved successfully!');
            // $request->session()->forget('SUCCESS_MESSAGE');
         return redirect()->action('PostsController@show', $post->id);
 
@@ -193,7 +206,7 @@ class PostsController extends Controller
     public function destroy($id)
     {
         //
-
+         // abort(403);
         $rules = array(
                 'title' => 'required|max:100',
                 'content' => 'required',
