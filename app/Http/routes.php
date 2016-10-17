@@ -11,6 +11,24 @@
 |
 */
 
+
+Route::resource('users', 'UsersController');
+Route::resource('posts', 'PostsController');
+// Route::resource('users', 'UsersController', ['except' =>['create', 'store']]);
+
+
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+
+
+
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -118,7 +136,6 @@ Route::get('/rolldice', 'HomeController@rolldice');
 
 // // get('/test', 'HomeController@test')
 
-Route::resource('posts', 'PostsController');
 
 // Route::get('orm-test', function ()
 // {
@@ -140,7 +157,7 @@ Route::resource('posts', 'PostsController');
 //     // test code here
 // });
 
-// Route::resources('users', 'UsersController');
+
 
 
 
