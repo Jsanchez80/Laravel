@@ -36,4 +36,11 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    // public function posts allows laravel to identify that there is a relationship it must use in order to search your database and return the information for the posts a user has written. 
+
+    public function posts()
+        {
+         return $this->hasMany('App\Models\Post', 'created_by');   
+        }
 }
