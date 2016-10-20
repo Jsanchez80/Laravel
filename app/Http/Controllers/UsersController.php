@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,37 +24,9 @@ class UsersController extends Controller
         //
         $users = User::paginate(5);
         $data = ['users'=>$users];
-        // dd($data);
         return view('users.index', $data);
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-    
-         return view('users.create');
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $user = new User;
-           $user->created_by = $request->user()->id;
-           $user->name = $request->name;
-           $user->email = $request->email;
-           $user->created_at = $request->created_at;
-           $user->save();
-
-        return redirect()->action('UsersController@show', $user->$id);
     }
 
     /**
@@ -61,9 +38,9 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $data = ['user' => $user];
-        // dd($post);
+        $data = ['user' => $user];  
         return view('users.show')->with($data);
+        
     }
 
     /**
