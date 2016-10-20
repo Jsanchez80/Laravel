@@ -23,6 +23,8 @@ class CreatePostsTable extends Migration
             $table->text('content');
             
             $table->timestamps();
+            // This is how we will search a database to find the posts the user created.
+            // $table->foreign('created_by')->references('id')->on('users');
         });
     }
 
