@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 namespace App\Http\Controllers\Auth;
 
@@ -17,14 +17,13 @@ class AuthController extends Controller
     |
     | This controller handles the registration of new users, as well as the
     | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
+    | a simple trait to add these behaviors. Why do {
+        # code...
+    } while ( <= 10);n't you explore it?
     |
     */
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-    protected $redirectPath = '/posts';
-    protected $redirectAfterLogout = '/posts/1';
 
     /**
      * Create a new authentication controller instance.
@@ -35,7 +34,7 @@ class AuthController extends Controller
     {
         $this->middleware('guest', ['except' => 'getLogout']);
         $this->redirectPath = action('PostsController@index');
-        $this->redirectAfterLogout = action('PostsController@show');
+        $this->redirectAfterLogout = action('PostsController@index');
     }
 
     /**
