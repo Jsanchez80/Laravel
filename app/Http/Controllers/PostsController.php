@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
 
 // use App\Validate as ValForm;
 // use App\Models\Validate as ValFiles;
@@ -18,10 +20,10 @@ use Illuminate\Support\Facades\Log;
 class PostsController extends Controller
 {
     // use this function to keep people from accessing site features unless they are logged in:
-//     public function __construct()
-// {
-//     $this->middleware('auth', ['except' => ['index', 'show']]);
-// }
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -29,6 +31,9 @@ class PostsController extends Controller
      */
     public function index()
     {
+        
+        
+
         // abort(403);
         //
         Log::info('This is some useful information.');
@@ -38,16 +43,24 @@ class PostsController extends Controller
         Log::warning('Something could be going wrong.');
 
         Log::error('Something is really going wrong.');
-        // defining your error
-      
+       
+        // Use this code to test your page. 
+        // $posts = Post::find(2);
+        // dd($posts->user->email);
 
-        // $post = new Post();
-        // dd($post);
-
-        $posts = Post::paginate(5);
+        $posts = Post::with('user')->paginate(10);
         $data = ['posts'=>$posts];
-    	return view('posts.index', $data);
-    	
+    	// return view('posts.index', $data);
+
+        // if (Auth::check()) {
+        //     // The user is logged in...
+            return view('posts.index', $data);
+
+        // } else {
+            
+        //     return view('auth.login');
+
+        // }
 
     	// adlister version: Do not use this code...an example of the differences in syntax
     	// foreach ($posts->attributes as $post) {
@@ -64,6 +77,8 @@ class PostsController extends Controller
     	// }
 
         // return "Hello Jessica!";
+
+        $request->session()->flash('ERROR_MESSAGE', 'Post was not saved. Please see messages under inputs.');    
     }
 
     /**
@@ -75,7 +90,13 @@ class PostsController extends Controller
     {
 
         // abort(403);
-        return view('posts.create');
+       
+        //     // The user is logged in...
+            return view('posts.create');
+
+
+
+        
         
     }
 
@@ -118,7 +139,7 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-
+       
          // abort(404);
         //
         $post = Post::find($id);
@@ -163,16 +184,6 @@ class PostsController extends Controller
 
         $this->validate($request, $rules);
         $request->session()->forget('ERROR_MESSAGE');
-        $post = new Post;
-        $post->created_by = 1;
-        $post->title = $request->title;
-        $post->content = $request->content;
-        $post->url = $request->url;
-        $post->save();
-
-       $request->session()->flash('SUCCESS_MESSAGE', 'Post was saved successfully!');
-           // $request->session()->forget('SUCCESS_MESSAGE');
-        return redirect()->action('PostsController@show', $post->id);
 
 		$post = Post::find($id);
 		$post->title = $request->title;
@@ -191,7 +202,7 @@ class PostsController extends Controller
 		// }
 
         
-			return back()->withInput();
+			// return back()->withInput();
 
 		
         
@@ -229,4 +240,20 @@ class PostsController extends Controller
          
         // return "Delete a specific post";
     }
+
+    public static function search(Request $request)
+        {
+
+            $searchTerm = $request->search;
+
+
+            $posts = Post::where('title', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('content', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('url', 'LIKE', '%' . $searchTerm . '%')
+                    ->orderBy('created_at', 'desc')->get();
+
+            return view('posts.search')->with('posts', $posts);
+        }
+
+
 }
