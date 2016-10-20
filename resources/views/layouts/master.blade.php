@@ -18,7 +18,6 @@
 			margin: 0;
 			padding: 0;
 			overflow: hidden;
-			background-color: salmon;
 			top: 0;
 			width: 100%;
 		}
@@ -31,7 +30,7 @@
 			display: block;
 			color: white;
 			text-align: center;
-			padding: 14px 16px;
+			padding: 18px 16px;
 			text-decoration: none;
 		}
 
@@ -50,20 +49,35 @@
 {{-- Begin: Body of page starts here: We open with a nav-bar and a jumbotron call to action.  --}}
 
 <body>
-	<div class="nav" style="background-color: salmon; color: white; border: thin solid black;">
+	
+	<div class="nav" style="background-color: black; color: white; border: thin solid black;">
     <ul>
-		<li class="home"><a href="#">Home</a></li>
-		<li class="tutorials"><a class="active" href="#">Tutorials</a></li>
-		<li class="about"><a href="#">About</a></li>
-		<li class="news"><a href="#">Newsletter</a></li>
+	@if(Auth::check());
+		<li class="home"><a href="http://reddit.dev/posts">Home</a></li>
+		<li class="about"><a href="http://reddit.dev/posts/create">Make A Post</a></li>
+		<li class="news"><a href="#">About</a></li>
 		<li class="contact"><a href="#">Contact</a></li>
+		<li class="logout"><a href="{{ action('Auth\AuthController@getLogout') }}">Logout</a></li>
+	@else
+		<li class="login"><a href="http://reddit.dev/auth/login">Login</a></li>
+		<li clas="register"><a href="{{ action('Auth\AuthController@getRegister') }}">Register</a></li>
+	@endif
+
+{{-- Begin: Search Bar --}}
+	<form class="navbar-form navbar-right" method="GET" action="{{ action('PostsController@search') }}" role="search" style="margin:10px;">
+		<div class="form-group">
+			<input type="text" class="form-control" name="search" placeholder="Search">
+		</div>
+		<button type="submit" class="btn btn-default">Submit</button>
+	</form>
 	</ul>
 	</div>
+	
 
 	<div class="jumbotron" style="padding: 2%;">
 	  <h1>Welcome to Forust!</h1>
 	  <p>Forust is San Antonio's Premiere Blog for the Forum Posts you find absolutely nuts! If you come across a post that's nutty as Buddy, share it and get a chance to earn a $50 gift card to Texas Land and Cattle! Sign up today!!!</p>
-	  <p><a class="btn btn-primary btn-lg" style="background-color: #4000ff;" href="" role="submit">Sign Up!</a></p>
+	  <p><a class="btn btn-primary btn-lg" style="background-color: #4000ff;" href="http://reddit.dev/auth/register" role="submit">Sign Up!</a></p>
 	</div>
 
 {{-- Begin: 4 column gif's start here and are wrapped in a div class="row for seperation of content.  If you don't wrap the images in a div row, you will have content that merges with your images and the page looks wonky. " --}}
@@ -118,7 +132,9 @@
 		@endif
 		
 		@yield('content')
-	</div>
+
+
+
 
 {{-- Begin: Footer info listed below.  --}}
 <div class="row">
