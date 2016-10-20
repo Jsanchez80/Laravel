@@ -12,7 +12,8 @@
 */
 
 
-Route::resource('users', 'UsersController');
+Route::resource('users', 'UsersController', ['except' => ['store', 'create']]);
+Route::get('posts/search', 'PostsController@search');
 Route::resource('posts', 'PostsController');
 // Route::resource('users', 'UsersController', ['except' =>['create', 'store']]);
 
@@ -24,6 +25,8 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+
 
 
 
